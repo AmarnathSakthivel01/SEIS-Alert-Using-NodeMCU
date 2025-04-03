@@ -1,0 +1,35 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+int a,b,c;//D1-scl;D2-sda
+void setup()
+{
+Serial.begin(115200);
+pinMode(D5,INPUT);
+pinMode(D7,OUTPUT);
+lcd.init();
+lcd.backlight();
+lcd.setCursor(0, 0);
+lcd.print("danger zone");
+}
+void loop()
+{
+a=digitalRead(D5);
+Serial.println(a);
+if(a==1)
+{
+lcd.clear();
+lcd.setCursor(0, 0);
+lcd.print("danger zone");
+digitalWrite(D7,HIGH);
+delay(3000);
+}
+else
+{
+digitalWrite(D7,LOW);
+lcd.clear();
+lcd.setCursor(0, 0);
+lcd.print("normal");
+}
+delay(500);
+}
